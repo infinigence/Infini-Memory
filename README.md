@@ -183,7 +183,7 @@ search_strategy = "AGENTIC"
 Infini Memory stores persistent memory as topic documents, where each document groups related facts, preferences, and event cues under a shared topic. A document contains a metadata header (`id`, `summary`, `token_count`, `created_time`, `update_log`, `aux`) and a hierarchical body. The body uses topic and subtopic headings to organize memory entries, each prefixed with a parsable signature `<seq=..., time=..., source=...>` that preserves temporal order, provenance, and revision context.
 
 <p align="center">
-  <img src="images/Memory_Document_Format.svg" width="600" alt="Topic Document Format">
+  <img src="images/Memory_Document_Format.svg" width="500" alt="Topic Document Format">
 </p>
 
 ### Write Path
@@ -191,7 +191,7 @@ Infini Memory stores persistent memory as topic documents, where each document g
 The writing and consolidation pipeline separates high-frequency writes from low-frequency structural maintenance. New memories are first appended to a `CURRENT` buffer, then periodically consolidated into the topic document library.
 
 <p align="center">
-  <img src="images/Memory_Extraction_Consolidation.svg" width="700" alt="Memory Writing and Consolidation Pipeline">
+  <img src="images/Memory_Extraction_Consolidation.svg" width="500" alt="Memory Writing and Consolidation Pipeline">
 </p>
 
 1. **Extract**: LLM extracts salient information from conversations into structured Markdown
@@ -207,13 +207,13 @@ Infini Memory supports two retrieval variants.
 **Hybrid Retrieval (LLM Summary + BM25 Partitions):** The LLM selects candidate documents by summary relevance, and BM25 supplements with lexically matched partitions from the remaining documents.
 
 <p align="center">
-  <img src="images/Memory_Retrieval_BM25.svg" width="700" alt="Hybrid Retrieval: LLM Summary + BM25 Partitions">
+  <img src="images/Memory_Retrieval_BM25.svg" width="500" alt="Hybrid Retrieval: LLM Summary + BM25 Partitions">
 </p>
 
 **Agentic Retrieval:** The LLM agent iteratively calls memory tools (`grep`, `grep_doc`, `search`, `list_docs`, `read_lines`) to search, verify, and expand evidence across topic documents and the `CURRENT` buffer before generating the final answer. When the agent returns insufficient evidence, BM25-based partition retrieval supplements the results.
 
 <p align="center">
-  <img src="images/Memory_Retrieval_Agentic.svg" width="700" alt="Agentic Retrieval">
+  <img src="images/Memory_Retrieval_Agentic.svg" width="500" alt="Agentic Retrieval">
 </p>
 
 ## License
