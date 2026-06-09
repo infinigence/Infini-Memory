@@ -1,0 +1,16 @@
+prune .claude
+prune .vscode
+prune eval
+prune eval_data
+prune scripts
+prune knowledge
+prune config
+prune test_data
+prune test_logs
+prune logs
+prune data
+prune backup
+exclude uv.lock
+exclude AGENTS.md
+exclude CLAUDE.md
+exclude eval_flowcharts.md
