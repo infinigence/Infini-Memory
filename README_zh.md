@@ -183,7 +183,7 @@ search_strategy = "AGENTIC"
 Infini Memory 将持久化记忆存储为主题文档，每个文档将相关的事实、偏好和事件线索分组到一个共享主题下。文档包含元数据头（`id`、`summary`、`token_count`、`created_time`、`update_log`、`aux`）和分层正文。正文使用主题和子主题标题来组织记忆条目，每个条目以可解析的签名 `<seq=..., time=..., source=...>` 作为前缀，保留时间顺序、来源信息和修订上下文。
 
 <p align="center">
-  <img src="images/Memory_Document_Format.svg" width="600" alt="主题文档格式">
+  <img src="images/Memory_Document_Format.svg" width="500" alt="主题文档格式">
 </p>
 
 ### 写入路径
@@ -191,7 +191,7 @@ Infini Memory 将持久化记忆存储为主题文档，每个文档将相关的
 写入与整合流水线将高频写入与低频结构维护分离。新记忆首先追加到 `CURRENT` 缓冲区，然后定期整合到主题文档库中。
 
 <p align="center">
-  <img src="images/Memory_Extraction_Consolidation.svg" width="700" alt="记忆写入与整合流水线">
+  <img src="images/Memory_Extraction_Consolidation.svg" width="500" alt="记忆写入与整合流水线">
 </p>
 
 1. **提取**：LLM 从对话中提取关键信息，转为结构化 Markdown
@@ -207,13 +207,13 @@ Infini Memory 支持两种检索变体。
 **混合检索（LLM 摘要 + BM25 分区）：** LLM 通过摘要相关性选择候选文档，BM25 从剩余文档中补充词法匹配的分区。
 
 <p align="center">
-  <img src="images/Memory_Retrieval_BM25.svg" width="700" alt="混合检索：LLM 摘要 + BM25 分区">
+  <img src="images/Memory_Retrieval_BM25.svg" width="500" alt="混合检索：LLM 摘要 + BM25 分区">
 </p>
 
 **智能检索（Agentic Retrieval）：** LLM 代理迭代调用记忆工具（`grep`、`grep_doc`、`search`、`list_docs`、`read_lines`）来搜索、验证和扩展主题文档和 `CURRENT` 缓冲区中的证据，然后生成最终回答。当智能体返回的证据不足时，BM25 分区检索会补充结果。
 
 <p align="center">
-  <img src="images/Memory_Retrieval_Agentic.svg" width="700" alt="智能检索">
+  <img src="images/Memory_Retrieval_Agentic.svg" width="500" alt="智能检索">
 </p>
 
 ## 许可证
