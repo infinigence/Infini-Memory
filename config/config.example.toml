@@ -1,0 +1,46 @@
+# This file is an example configuration and is tracked in version control.
+# For actual runtime configuration, copy this file to config.toml and modify as needed.
+
+[common]
+# Other common configuration items, examples:
+env = "dev"
+timezone = "Asia/Shanghai"
+
+[log]
+# Log level: DEBUG/INFO/WARNING/ERROR/CRITICAL
+level = "INFO"
+
+[llm]
+# LLM-related configuration
+openai_api_key = ""
+openai_base_url = ""
+model = "gpt-5-mini"
+judge_model = "gpt-5"  # Model used during the judge phase of evaluation
+temperature = 0.1  # LLM temperature parameter, controls output randomness (0-2, default 0.1)
+retry_max_attempts = 10  # Maximum number of retries for LLM calls
+retry_initial_wait = 5.0  # Initial wait time for LLM retries (seconds)
+retry_max_wait = 60.0  # Maximum wait time for LLM retries (seconds)
+retry_jitter = 0.2  # Jitter ratio for LLM retry wait time (0-1)
+
+[memory]
+# Memory system configuration
+enabled = false
+data_root = "data"
+doc_dir = "doc"
+metadata_dir = "metadata"
+index_file = "index.json"
+markdown_length = 5000   # Document token limit
+current_stale_seconds = 3600  # CURRENT document timeout (seconds); on next write after timeout, SPLIT/MERGE is executed first (0 = disabled)
+summary_length = 100     # Summary token limit
+search_limit = 10        # Maximum number of documents returned by search
+search_strategy = "LLM_or_BM25"  # Search strategy: LLM/BM25/BM25_partition/LLM_and_BM25/LLM_and_BM25_partition/LLM_or_BM25/FOLDER_BM25_partition (BM25_partition variants prefer matched partitions as context)
+search_folder = ""  # Under FOLDER_BM25_partition strategy, specify the directory to search (e.g., raw, rewrite, doc)
+rewrite_doc_threads = 5  # Number of threads when calling REWRITE_DOC_PROMPT
+retry_max_attempts = 5   # Maximum number of retries on add/search failure
+retry_initial_wait = 5   # Initial wait time on add/search failure (seconds); each retry waits attempt * retry_initial_wait
+
+# Merge-related configuration
+merge_enabled = true     # Whether to enable document merging (default true)
+merge_frequency = 5      # Trigger merge every N SPLIT calls (default 5)
+merge_max_tokens = 1000  # Maximum token count for documents participating in merge; only documents below this threshold are merged (default 1000)
+merge_trigger_min_count = 20  # After SPLIT, if the number of documents below merge_max_tokens exceeds this value, also trigger MERGE (default 20)

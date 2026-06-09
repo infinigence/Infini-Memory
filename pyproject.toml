@@ -1,0 +1,68 @@
+[project]
+name = "infini-memory"
+version = "0.1.0"
+description = "A lightweight, scalable persistent memory system for LLM applications and long-term interactive agents"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.13"
+keywords = ["memory", "llm", "ai", "agent", "rag", "long-term-memory", "personalization"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+  "langchain",
+  "langfuse",
+  "numpy",
+  "openai>=1.0",
+  "pydantic>=2",
+]
+
+[project.urls]
+Homepage = "https://github.com/jisuozhao/infini-memory"
+Repository = "https://github.com/jisuozhao/infini-memory"
+Issues = "https://github.com/jisuozhao/infini-memory/issues"
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/infini_memory"]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  ".git",
+  ".claude/",
+  ".vscode/",
+  "uv.lock",
+  "eval/",
+  "eval_data/",
+  "scripts/",
+  "knowledge/",
+  "config/",
+  "AGENTS.md",
+  "CLAUDE.md",
+  "eval_flowcharts.md",
+  "test_data/",
+  "test_logs/",
+  "logs/",
+  "data/",
+  "backup/",
+]
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "DEBUG"
+log_cli_format = "%(asctime)s | %(levelname)s | %(name)s | %(filename)s:%(lineno)d | %(message)s"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]
