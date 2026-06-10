@@ -1,8 +1,15 @@
 # Infini Memory
 
+[![PyPI](https://img.shields.io/pypi/v/infini-memory)](https://pypi.org/project/infini-memory/)
+[![Python](https://img.shields.io/pypi/pyversions/infini-memory)](https://pypi.org/project/infini-memory/)
+[![License](https://img.shields.io/github/license/infinigence/Infini-Memory)](LICENSE)
+[![arXiv](https://img.shields.io/badge/arXiv-2606.10677-b31b1b)](https://arxiv.org/abs/2606.10677)
+
 [English](README.md) | **中文**
 
 一种可维护的、基于文本的持久化记忆架构，将 LLM 代理记忆组织为主题结构化文档。
+
+[[论文](https://arxiv.org/abs/2606.10677)]
 
 ## 简介
 
@@ -215,6 +222,20 @@ Infini Memory 支持两种检索变体。
 <p align="center">
   <img src="images/Memory_Retrieval_Agentic.svg" width="500" alt="智能检索">
 </p>
+
+## 引用
+
+```bibtex
+@misc{ji2026infinimemorymaintainabletopic,
+      title={Infini Memory: Maintainable Topic Documents for Long-Term LLM Agent Memory}, 
+      author={Suozhao Ji and Baodong Wu and Zehao Wang and Lei Xia and Qingping Li and Ruisong Wang and Wenbo Ding and Zhenhua Zhu and Boxun Li and Guohao Dai and Yu Wang},
+      year={2026},
+      eprint={2606.10677},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2606.10677}, 
+}
+```
 
 ## 许可证
 
