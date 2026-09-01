@@ -1,4 +1,4 @@
 *
 !.gitignore
 !config.example.toml
-
+!ai_demo_config.example.toml

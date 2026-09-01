@@ -27,7 +27,7 @@ Infini Memory 将持久化记忆视为一个**生命周期维护问题**，围�
 - **主题文档作为记忆载体**：以纯文本 Markdown 文档按主题组织，不依赖向量或图数据库
 - **缓冲写入与定期整合**：高频写入追加到 `CURRENT` 缓冲区；当积累了一定的信息或者到了一定时间阈值后才触发整合（重写、拆分、更新、合并）
 - **代理式检索**：LLM 通过记忆工具迭代搜索、验证和扩展证据，而非依赖单次检索步骤
-- **文件系统后端**：无需外部基础设施——记忆状态保持可读、可编辑和可移植
+- **可插拔存储后端**：支持本地文件系统（默认）和 S3 兼容对象存储（SeaweedFS、MinIO、AWS S3）
 
 ## 快速开始
 
@@ -99,7 +99,7 @@ AI: 你在我这里的记录是：
 `Memory` 类提供完整的文档 CRUD 操作和用户管理功能：
 
 ```python
-from infini_memory import Memory
+from infini_memory_classic import Memory
 
 memory = Memory()
 
@@ -144,7 +144,7 @@ memory.reset()
 ### 编程方式（推荐用于库集成）
 
 ```python
-from infini_memory import Memory
+from infini_memory_classic import Memory
 
 memory = Memory(
     api_key="sk-...",                      # 或设置 OPENAI_API_KEY 环境变量
@@ -160,7 +160,7 @@ memory = Memory(
 
 ```python
 from pathlib import Path
-from infini_memory import InfiniMemory, InfiniMemoryConfig
+from infini_memory_classic import InfiniMemory, InfiniMemoryConfig
 
 cfg = InfiniMemoryConfig(config_file=Path("config/config.toml"))
 mem = InfiniMemory()
@@ -182,6 +182,53 @@ data_root = "data"
 markdown_length = 1000
 search_strategy = "AGENTIC"
 ```
+
+## 存储后端
+
+Infini Memory 支持两种存储后端：
+
+### 本地文件系统（默认）
+
+无需额外配置，文档以普通文件存储在磁盘上：
+
+```python
+memory = Memory(data_root="my_data")
+```
+
+### S3 兼容对象存储
+
+支持 AWS S3、SeaweedFS、MinIO 等 S3 兼容服务。
+
+安装 S3 依赖：
+
+```bash
+pip install infini-memory[s3]
+```
+
+编程方式配置：
+
+```python
+memory = Memory(
+    storage_type="s3",
+    s3_endpoint="http://your-s3-endpoint:8333",
+    s3_bucket="infini-memory",
+    s3_access_key="your-access-key",
+    s3_secret_key="your-secret-key",
+)
+```
+
+或通过 `config.toml` 配置：
+
+```toml
+[storage]
+storage_type = "s3"
+s3_endpoint = "http://your-s3-endpoint:8333"
+s3_bucket = "infini-memory"
+s3_access_key = ""
+s3_secret_key = ""
+```
+
+如果 bucket 不存在会自动创建。
 
 ## 架构
 

@@ -44,3 +44,21 @@ merge_enabled = true     # Whether to enable document merging (default true)
 merge_frequency = 5      # Trigger merge every N SPLIT calls (default 5)
 merge_max_tokens = 1000  # Maximum token count for documents participating in merge; only documents below this threshold are merged (default 1000)
 merge_trigger_min_count = 20  # After SPLIT, if the number of documents below merge_max_tokens exceeds this value, also trigger MERGE (default 20)
+
+# Skills configuration
+skills_enabled = true            # Enable skills features (default true)
+skills_dir = "skills"            # Skills subdirectory name under each user's data directory
+skills_auto_generate = false     # Auto-generate skills after splits (default false)
+skills_generate_frequency = 5    # Generate skills every N splits when auto_generate is enabled (default 5)
+skills_max_per_user = 20         # Maximum number of skills per user (default 20)
+skills_extraction_hints = true   # Use skills' extraction_hints to guide memory extraction (default true)
+
+[storage]
+# Storage backend: "local" (default, file system) or "s3" (S3-compatible object storage)
+storage_type = "local"
+# S3 configuration (only used when storage_type = "s3")
+# s3_endpoint = "http://seaweedfs.local-db-tools.svc.cluster.local:8333"
+# s3_bucket = "infini-memory"
+# s3_access_key = ""
+# s3_secret_key = ""
+# s3_prefix = ""
