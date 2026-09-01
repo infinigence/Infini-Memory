@@ -27,7 +27,9 @@ Infini Memory addresses these by treating persistent memory as a **lifecycle mai
 - **Topic documents as memory carrier**: Plain-text Markdown documents organized by topic, no dependency on vector or graph databases
 - **Buffered writing with periodic consolidation**: High-frequency writes are appended to a `CURRENT` buffer; consolidation (rewriting, splitting, updating, merging) is triggered when enough information accumulates or a time threshold is reached
 - **Agentic retrieval**: The LLM iteratively searches, verifies, and expands evidence through memory tools, rather than relying on a single retrieval step
-- **File-system backend**: No external infrastructure required — the memory state remains readable, editable, and portable
+- **Pluggable storage backend**: Supports local filesystem (default) and S3-compatible object storage (SeaweedFS, MinIO, AWS S3)
+
+For AI Agent applications, use the [`infini_agent_memory`](src/infini_agent_memory/README.md) module. It provides a small Pydantic API over the separately scalable extraction, CronJob maintenance, and retrieval flows, defaults to local storage and `deepseek-v4-flash-0731`, supports S3-compatible storage, and exposes Prometheus metrics. The lower-level [`mem_flow`](src/mem_flow/README.md) engine remains available for advanced integrations.
 
 ## Quick Start
 
@@ -99,7 +101,7 @@ Want me to change or add anything? Should I prioritize these preferences when su
 The `Memory` class provides full CRUD operations for documents and user management:
 
 ```python
-from infini_memory import Memory
+from infini_memory_classic import Memory
 
 memory = Memory()
 
@@ -144,7 +146,7 @@ memory.reset()
 ### Programmatic (recommended for library use)
 
 ```python
-from infini_memory import Memory
+from infini_memory_classic import Memory
 
 memory = Memory(
     api_key="sk-...",                      # or set OPENAI_API_KEY env var
@@ -160,7 +162,7 @@ memory = Memory(
 
 ```python
 from pathlib import Path
-from infini_memory import InfiniMemory, InfiniMemoryConfig
+from infini_memory_classic import InfiniMemory, InfiniMemoryConfig
 
 cfg = InfiniMemoryConfig(config_file=Path("config/config.toml"))
 mem = InfiniMemory()
@@ -182,6 +184,53 @@ data_root = "data"
 markdown_length = 1000
 search_strategy = "AGENTIC"
 ```
+
+## Storage Backends
+
+Infini Memory supports two storage backends:
+
+### Local Filesystem (default)
+
+No extra configuration needed. Documents are stored as plain files on disk:
+
+```python
+memory = Memory(data_root="my_data")
+```
+
+### S3-Compatible Object Storage
+
+Works with AWS S3, SeaweedFS, MinIO, and other S3-compatible services.
+
+Install the S3 dependency:
+
+```bash
+pip install infini-memory[s3]
+```
+
+Configure programmatically:
+
+```python
+memory = Memory(
+    storage_type="s3",
+    s3_endpoint="http://your-s3-endpoint:8333",
+    s3_bucket="infini-memory",
+    s3_access_key="your-access-key",
+    s3_secret_key="your-secret-key",
+)
+```
+
+Or via `config.toml`:
+
+```toml
+[storage]
+storage_type = "s3"
+s3_endpoint = "http://your-s3-endpoint:8333"
+s3_bucket = "infini-memory"
+s3_access_key = ""
+s3_secret_key = ""
+```
+
+The bucket is auto-created if it does not exist.
 
 ## Architecture
 
